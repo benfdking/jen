@@ -4,7 +4,6 @@ import (
 	"crypto/rand"
 	"crypto/rsa"
 	"encoding/json"
-	"github.com/benfking/jen/pkg/jwks"
 	"github.com/benfking/jen/pkg/rsapem"
 	"github.com/lestrrat-go/jwx/jwk"
 	"github.com/spf13/cobra"
@@ -31,7 +30,7 @@ var jwksCmd = &cobra.Command{
 		if err != nil {
 			log.Fatalf("failed to create JWK: %s", err)
 		}
-		jsonbuf, err := json.MarshalIndent(jwks.Set{Keys: []jwk.Key{key}}, "", "  ")
+		jsonbuf, err := json.MarshalIndent(jwk.Set{Keys: []jwk.Key{key}}, "", "  ")
 		if err != nil {
 			log.Fatalf("failed to generate JSON: %s", err)
 		}

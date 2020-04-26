@@ -8,7 +8,7 @@ const (
 	privatePEMURL = "https://raw.githubusercontent.com/benfdking/jen/master/keys/%s/private.pem"
 )
 
-func ReturnJWKSAndPrivatePEMURL(version string) (jwks string, url string, err error) {
+func ReturnJWKSAndPrivatePEMURL(version string) (jwks string, pem string, err error) {
 	in, err := returnVersion(version)
 	if err != nil {
 		return "", "",nil
