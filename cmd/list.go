@@ -8,10 +8,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-
 // listCmd represents the list command
 var listCmd = &cobra.Command{
-	// TODO Make this dependent on versions passed in
 	Use:   "list [abc]",
 	Short: "lists the default keys that can be used, optionally specifying one only returns one",
 	Args: func(cmd *cobra.Command, args []string) error {
@@ -28,15 +26,21 @@ var listCmd = &cobra.Command{
 		}
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-
-
-		const alphabet = "abc"
-		for _, c := range alphabet {
-			jwksURL, _, err := url.ReturnJWKSAndPrivatePEMURL(string(c))
+		if len(args) == 1 {
+			jwksURL, _, err := url.ReturnJWKSAndPrivatePEMURL(args[0])
 			if err != nil {
 				log.Fatal(err)
 			}
-			fmt.Printf("key %c, jwks url: "+jwksURL+"\n", c)
+			fmt.Println(jwksURL)
+		} else {
+			const alphabet = "abc"
+			for _, c := range alphabet {
+				jwksURL, _, err := url.ReturnJWKSAndPrivatePEMURL(string(c))
+				if err != nil {
+					log.Fatal(err)
+				}
+				fmt.Printf("key %c, jwks url: "+jwksURL+"\n", c)
+			}
 		}
 	},
 }
