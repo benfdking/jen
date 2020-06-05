@@ -11,10 +11,11 @@ import (
 )
 
 var key string
+var addDefaults bool
 
 // jwtCmd represents the jwt command
 var jwtCmd = &cobra.Command{
-	Use:   "jwt [json file path]",
+	Use:   "jwt [optional json file path]",
 	Short: "Generate a jwt",
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) > 1 {
@@ -32,11 +33,23 @@ var jwtCmd = &cobra.Command{
 		if err != nil {
 			log.Fatal(err)
 		}
-		jwtString, err := defaultjwt.Default(pem)
+
+		token := defaultjwt.NewToken()
+		if addDefaults {
+			token = defaultjwt.AddDefaultsToToken(token)
+		}
+		if len(args) == 1 {
+			token, err = defaultjwt.AddJSONFileToToken(token, args[0])
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+
+		s, err := defaultjwt.SignToken(token, pem)
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println(jwtString)
+		fmt.Println(s)
 	},
 }
 
@@ -44,4 +57,5 @@ func init() {
 	rootCmd.AddCommand(jwtCmd)
 
 	jwtCmd.Flags().StringVarP(&key, "key", "k", "a", "[abc] jwt key to use")
+	jwtCmd.Flags().BoolVarP(&addDefaults, "defaults", "d", true, "adds default oidc parameters, true by default")
 }
