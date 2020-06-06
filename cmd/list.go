@@ -11,7 +11,7 @@ import (
 // listCmd represents the list command
 var listCmd = &cobra.Command{
 	Use:   "list [abc]",
-	Short: "lists the default keys that can be used, optionally specifying one only returns one",
+	Short: "List the default keys, optionally specifying one only returns one",
 	Args: func(cmd *cobra.Command, args []string) error {
 		switch {
 		case len(args) > 1:
