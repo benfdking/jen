@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"errors"
 	"fmt"
 
 	"github.com/benfdking/jen/pkg/defaultjwt"
@@ -11,12 +10,7 @@ import (
 var defaultsCmd = &cobra.Command{
 	Use:   "defaults",
 	Short: "returns default claims",
-	Args: func(cmd *cobra.Command, args []string) error {
-		if len(args) > 0 {
-			return errors.New("defaults takes no arguments")
-		}
-		return nil
-	},
+	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		cs := defaultjwt.GetDefaultClaims()
 		for _, c := range cs {

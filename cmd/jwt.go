@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 	"log"
-	"os"
 
 	"github.com/benfdking/jen/pkg/defaultjwt"
 	"github.com/benfdking/jen/pkg/url"
@@ -18,17 +17,7 @@ var filePath string
 var jwtCmd = &cobra.Command{
 	Use:   "jwt [claims json]",
 	Short: "Generate a jwt",
-	Args: func(cmd *cobra.Command, args []string) error {
-		if len(args) > 1 {
-			return fmt.Errorf("incorrect number of arguments %d, must be 1 or less", len(args))
-		}
-		if len(args) == 1 {
-			if _, err := os.Stat(args[0]); os.IsNotExist(err) {
-				return fmt.Errorf("file %s does not exist", args[0])
-			}
-		}
-		return nil
-	},
+	Args:  cobra.RangeArgs(0, 1),
 	Run: func(cmd *cobra.Command, args []string) {
 		_, pem, err := url.ReturnJWKSAndPrivateKey(key)
 		if err != nil {
