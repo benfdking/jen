@@ -2,6 +2,12 @@
 
 jen is you go to CLI tool whenever you need to generate jwts for use with a jwks based system.
 
+## Installation
+
+```shell
+go install github.com/benfdking/jen
+```
+
 ## Usage
 
 ```
