@@ -15,13 +15,13 @@ import (
 const defaultSubject = "fa645455-f280-4de4-b010-bf7e28310c66"
 
 // NewToken returns a new token
-func NewToken() *jwt.Token {
+func NewToken() jwt.Token {
 	return jwt.New()
 }
 
 // SignToken signs a token and returns a string
-func SignToken(token *jwt.Token, key crypto.PrivateKey) (string, error) {
-	output, err := token.Sign(jwa.RS256, key)
+func SignToken(token jwt.Token, key crypto.PrivateKey) (string, error) {
+	output, err := jwt.Sign(token, jwa.RS256, key)
 	if err != nil {
 		return "", fmt.Errorf("failed to generate signed payload: %w", err)
 	}
@@ -29,7 +29,7 @@ func SignToken(token *jwt.Token, key crypto.PrivateKey) (string, error) {
 }
 
 // AddDefaultClaims adds default claims to jwt
-func AddDefaultClaims(token *jwt.Token) (*jwt.Token, error) {
+func AddDefaultClaims(token jwt.Token) (jwt.Token, error) {
 	cs := map[string]interface{}{
 		jwt.IssuerKey:     "https://github.com/benfdking/jen",
 		jwt.IssuedAtKey:   time.Now(),
@@ -48,7 +48,7 @@ func AddDefaultClaims(token *jwt.Token) (*jwt.Token, error) {
 }
 
 // addMapClaimsToToken adds all the properties of a map to the token
-func addMapClaimsToToken(t *jwt.Token, cs map[string]string) (*jwt.Token, error) {
+func addMapClaimsToToken(t jwt.Token, cs map[string]string) (jwt.Token, error) {
 	for k, v := range cs {
 		err := t.Set(k, v)
 		if err != nil {
@@ -59,7 +59,7 @@ func addMapClaimsToToken(t *jwt.Token, cs map[string]string) (*jwt.Token, error)
 }
 
 // AddJSONFileClaimsToToken adds content of json file to token
-func AddJSONFileClaimsToToken(t *jwt.Token, path string) (*jwt.Token, error) {
+func AddJSONFileClaimsToToken(t jwt.Token, path string) (jwt.Token, error) {
 	file, err := os.Open(path)
 	if err != nil {
 		return nil, err
