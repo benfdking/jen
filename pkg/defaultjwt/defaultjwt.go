@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"time"
 
 	"github.com/lestrrat-go/jwx/jwa"
 	"github.com/lestrrat-go/jwx/jwt"
@@ -30,16 +29,9 @@ func SignToken(token jwt.Token, key crypto.PrivateKey) (string, error) {
 
 // AddDefaultClaims adds default claims to jwt
 func AddDefaultClaims(token jwt.Token) (jwt.Token, error) {
-	cs := map[string]interface{}{
-		jwt.IssuerKey:     "https://github.com/benfdking/jen",
-		jwt.IssuedAtKey:   time.Now(),
-		jwt.SubjectKey:    defaultSubject,
-		jwt.AudienceKey:   "AuthenticationGurus",
-		jwt.ExpirationKey: time.Now().Add(1 * time.Hour).Unix(),
-		jwt.NotBeforeKey:  time.Now(),
-	}
-	for k, v := range cs {
-		err := token.Set(k, v)
+	cs := GetDefaultClaims()
+	for _, c := range cs {
+		err := token.Set(c.Key, c.Value)
 		if err != nil {
 			return nil, err
 		}
