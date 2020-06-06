@@ -4,7 +4,7 @@ import (
 	"crypto/rand"
 	"crypto/rsa"
 	"encoding/json"
-	"github.com/benfking/jen/pkg/rsapem"
+	"github.com/benfdking/jen/pkg/rsapem"
 	"github.com/lestrrat-go/jwx/jwk"
 	"github.com/spf13/cobra"
 	"io/ioutil"

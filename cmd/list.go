@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/benfking/jen/pkg/url"
+	"github.com/benfdking/jen/pkg/url"
 	"github.com/spf13/cobra"
 )
 

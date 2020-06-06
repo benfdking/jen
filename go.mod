@@ -1,4 +1,4 @@
-module github.com/benfking/jen
+module github.com/benfdking/jen
 
 go 1.13
 

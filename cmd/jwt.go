@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/benfking/jen/pkg/defaultjwt"
-	"github.com/benfking/jen/pkg/url"
+	"github.com/benfdking/jen/pkg/defaultjwt"
+	"github.com/benfdking/jen/pkg/url"
 	"github.com/spf13/cobra"
 )
 
