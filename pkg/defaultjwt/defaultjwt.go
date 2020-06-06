@@ -37,8 +37,8 @@ func AddDefaultClaims(token jwt.Token) (jwt.Token, error) {
 	return token, nil
 }
 
-// addMapClaimsToToken adds all the properties of a map to the token
-func addMapClaimsToToken(t jwt.Token, cs map[string]string) (jwt.Token, error) {
+// AddMapClaimsToToken adds all the properties of a map to the token
+func AddMapClaimsToToken(t jwt.Token, cs map[string]string) (jwt.Token, error) {
 	for k, v := range cs {
 		err := t.Set(k, v)
 		if err != nil {
@@ -55,7 +55,7 @@ func AddJSONStringClaimsToToken(t jwt.Token, s string) (jwt.Token, error) {
 	if err != nil {
 		return nil, err
 	}
-	return addMapClaimsToToken(t, values)
+	return AddMapClaimsToToken(t, values)
 }
 
 // AddJSONFileClaimsToToken adds content of json file to token
