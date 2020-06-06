@@ -20,7 +20,7 @@ var (
 // jwksCmd represents the jwks command
 var jwksCmd = &cobra.Command{
 	Use:   "jwks",
-	Short: "Generates a jwk set with optional private and public key",
+	Short: "Generate a jwk set with optional private and public key",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		privkey, err := rsa.GenerateKey(rand.Reader, 2048)

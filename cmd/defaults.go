@@ -13,7 +13,7 @@ var explain bool
 
 var defaultsCmd = &cobra.Command{
 	Use:   "defaults",
-	Short: "returns default claims",
+	Short: "Return default claims",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		cs := defaultjwt.GetDefaultClaims()

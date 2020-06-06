@@ -19,10 +19,12 @@ Usage:
   jen [command]
 
 Available Commands:
+  defaults    Return default claims
   help        Help about any command
-  jwks        Generates a jwk set with optional private and public key
+  jwks        Generate a jwk set with optional private and public key
   jwt         Generate a jwt
-  list        lists the default keys that can be used, optionally specifying one only returns one
+  list        List the default keys, optionally specifying one only returns one
+  version     Return build information
 
 Flags:
   -h, --help   help for jen
