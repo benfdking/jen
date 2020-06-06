@@ -42,6 +42,12 @@ var jwtCmd = &cobra.Command{
 				log.Fatal(err)
 			}
 		}
+		if len(args) == 1 {
+			token, err = defaultjwt.AddJSONStringClaimsToToken(token, args[0])
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
 		if filePath != "" {
 			token, err = defaultjwt.AddJSONFileClaimsToToken(token, filePath)
 			if err != nil {
