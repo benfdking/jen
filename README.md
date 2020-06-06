@@ -30,4 +30,6 @@ Flags:
 Use "jen [command] --help" for more information about a command.
 ```
 
- 
+## Credits
+
+- `jen` makes heavy use of the [jwx library](https://github.com/lestrrat-go/jwx)
