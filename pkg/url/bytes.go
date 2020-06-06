@@ -4,7 +4,7 @@ import (
 	"context"
 	"crypto"
 	"encoding/json"
-	"github.com/benfking/jen/pkg/rsapem"
+	"github.com/benfdking/jen/pkg/rsapem"
 	"github.com/lestrrat-go/jwx/jwk"
 	"golang.org/x/sync/errgroup"
 	"io/ioutil"

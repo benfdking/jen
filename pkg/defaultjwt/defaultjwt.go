@@ -31,7 +31,7 @@ func SignToken(token *jwt.Token, key crypto.PrivateKey) (string, error) {
 // AddDefaultClaims adds default claims to jwt
 func AddDefaultClaims(token *jwt.Token) (*jwt.Token, error) {
 	cs := map[string]interface{}{
-		jwt.IssuerKey:     "https://github.com/benfking/jen",
+		jwt.IssuerKey:     "https://github.com/benfdking/jen",
 		jwt.IssuedAtKey:   time.Now(),
 		jwt.SubjectKey:    defaultSubject,
 		jwt.AudienceKey:   "AuthenticationGurus",
