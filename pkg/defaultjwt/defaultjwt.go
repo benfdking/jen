@@ -11,8 +11,6 @@ import (
 	"github.com/lestrrat-go/jwx/jwt"
 )
 
-const defaultSubject = "fa645455-f280-4de4-b010-bf7e28310c66"
-
 // NewToken returns a new token
 func NewToken() jwt.Token {
 	return jwt.New()
@@ -50,6 +48,16 @@ func addMapClaimsToToken(t jwt.Token, cs map[string]string) (jwt.Token, error) {
 	return t, nil
 }
 
+// AddJSONStringClaimsToToken parses the string and adds the claims to the token
+func AddJSONStringClaimsToToken(t jwt.Token, s string) (jwt.Token, error) {
+	var values map[string]string
+	err := json.Unmarshal([]byte(s), &values)
+	if err != nil {
+		return nil, err
+	}
+	return addMapClaimsToToken(t, values)
+}
+
 // AddJSONFileClaimsToToken adds content of json file to token
 func AddJSONFileClaimsToToken(t jwt.Token, path string) (jwt.Token, error) {
 	file, err := os.Open(path)
@@ -61,10 +69,5 @@ func AddJSONFileClaimsToToken(t jwt.Token, path string) (jwt.Token, error) {
 	if err != nil {
 		return nil, err
 	}
-	var values map[string]string
-	err = json.Unmarshal(bytes, &values)
-	if err != nil {
-		return nil, err
-	}
-	return addMapClaimsToToken(t, values)
+	return AddJSONStringClaimsToToken(t, string(bytes))
 }
