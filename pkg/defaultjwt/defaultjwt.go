@@ -28,29 +28,39 @@ func SignToken(token *jwt.Token, key crypto.PrivateKey) (string, error) {
 	return string(output), nil
 }
 
-// AddDefaultsToToken adds default properties to jwt
-func AddDefaultsToToken(token *jwt.Token) *jwt.Token {
-	token.Set(jwt.IssuerKey, "https://github.com/benfking/jen")
-	token.Set(jwt.IssuedAtKey, time.Now())
-	token.Set(jwt.SubjectKey, defaultSubject)
-	token.Set(jwt.AudienceKey, "AuthenticationGurus")
-	token.Set(jwt.IssuerKey, "https://github.com/benfking/jen ")
-	token.Set(jwt.ExpirationKey, time.Now().Add(1*time.Hour).Unix())
-	token.Set(jwt.NotBeforeKey, time.Now())
-	return token
-}
-
-// addMapToToken adds all the properties of a map to the token
-func addMapToToken(token *jwt.Token, values map[string]string) *jwt.Token {
-	for key, value := range values {
-		token.Set(key, value)
+// AddDefaultClaims adds default claims to jwt
+func AddDefaultClaims(token *jwt.Token) (*jwt.Token, error) {
+	cs := map[string]interface{}{
+		jwt.IssuerKey:     "https://github.com/benfking/jen",
+		jwt.IssuedAtKey:   time.Now(),
+		jwt.SubjectKey:    defaultSubject,
+		jwt.AudienceKey:   "AuthenticationGurus",
+		jwt.ExpirationKey: time.Now().Add(1 * time.Hour).Unix(),
+		jwt.NotBeforeKey:  time.Now(),
 	}
-	return token
+	for k, v := range cs {
+		err := token.Set(k, v)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return token, nil
 }
 
-// AddJSONFileToToken adds content of json file to token
-func AddJSONFileToToken(token *jwt.Token, filePath string) (*jwt.Token, error) {
-	file, err := os.Open(filePath)
+// addMapClaimsToToken adds all the properties of a map to the token
+func addMapClaimsToToken(t *jwt.Token, cs map[string]string) (*jwt.Token, error) {
+	for k, v := range cs {
+		err := t.Set(k, v)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return t, nil
+}
+
+// AddJSONFileClaimsToToken adds content of json file to token
+func AddJSONFileClaimsToToken(t *jwt.Token, path string) (*jwt.Token, error) {
+	file, err := os.Open(path)
 	if err != nil {
 		return nil, err
 	}
@@ -64,6 +74,5 @@ func AddJSONFileToToken(token *jwt.Token, filePath string) (*jwt.Token, error) {
 	if err != nil {
 		return nil, err
 	}
-	token = addMapToToken(token, values)
-	return token, nil
+	return addMapClaimsToToken(t, values)
 }

@@ -36,10 +36,13 @@ var jwtCmd = &cobra.Command{
 
 		token := defaultjwt.NewToken()
 		if addDefaults {
-			token = defaultjwt.AddDefaultsToToken(token)
+			token, err = defaultjwt.AddDefaultClaims(token)
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
 		if len(args) == 1 {
-			token, err = defaultjwt.AddJSONFileToToken(token, args[0])
+			token, err = defaultjwt.AddJSONFileClaimsToToken(token, args[0])
 			if err != nil {
 				log.Fatal(err)
 			}
