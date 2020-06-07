@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"text/tabwriter"
 
 	"github.com/spf13/cobra"
 )
@@ -29,6 +30,10 @@ var versionCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(versionCmd)
+}
+
+func newTabWriter() *tabwriter.Writer {
+	return tabwriter.NewWriter(os.Stdout, 2, 0, 3, ' ', tabwriter.TabIndent)
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.

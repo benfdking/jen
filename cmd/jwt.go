@@ -62,8 +62,8 @@ var jwtCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(jwtCmd)
 
-	jwtCmd.Flags().StringToStringVarP(&claims, "claims", "c", map[string]string{}, "claims to be added to the jwt")
+	jwtCmd.Flags().StringToStringVarP(&claims, "claims", "c", map[string]string{}, "Claims for JWT")
 	jwtCmd.Flags().StringVarP(&key, "key", "k", "a", "[abc] jwt key to use")
-	jwtCmd.Flags().BoolVarP(&addDefaults, "defaults", "d", true, "adds default oidc parameters, true by default")
-	jwtCmd.Flags().StringVarP(&filePath, "file", "f", "", "json file to read claims from")
+	jwtCmd.Flags().BoolVarP(&addDefaults, "defaults", "d", true, "Add default claims")
+	jwtCmd.Flags().StringVarP(&filePath, "file", "f", "", "Add claims from JSON file")
 }
