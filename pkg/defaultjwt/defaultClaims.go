@@ -13,9 +13,7 @@ type DefaultClaims struct {
 	Description string
 }
 
-// GetDefaultClaims returns a list of default claims
-//
-// default claims have been taken from rfc 7519
+// GetDefaultClaims returns a list of default claims. Default claims have been taken from rfc 7519
 func GetDefaultClaims() []DefaultClaims {
 	return []DefaultClaims{
 		{

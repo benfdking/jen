@@ -18,9 +18,12 @@ var defaultsCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		cs := defaultjwt.GetDefaultClaims()
 		if explain {
+			w := newTabWriter()
+			fmt.Fprintf(w, "%s\t%s\t%s\n", "Key", "Value", "Description")
 			for _, c := range cs {
-				fmt.Printf("key: %s\tvalue: %s\tdescription: %s\n", c.Key, c.Value, c.Description)
+				fmt.Fprintf(w, "%s\t%s\t%s\n", c.Key, c.Value, c.Description)
 			}
+			w.Flush()
 		} else {
 			m := make(map[string]string, len(cs))
 			for _, c := range cs {
@@ -38,5 +41,5 @@ var defaultsCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(defaultsCmd)
 
-	defaultsCmd.Flags().BoolVarP(&explain, "explain", "e", false, "outputs a table explaining the default values")
+	defaultsCmd.Flags().BoolVarP(&explain, "explain", "e", false, "Explain default values")
 }

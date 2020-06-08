@@ -11,20 +11,8 @@ import (
 // listCmd represents the list command
 var listCmd = &cobra.Command{
 	Use:   "list [abc]",
-	Short: "List the default keys, optionally specifying one only returns one",
-	Args: func(cmd *cobra.Command, args []string) error {
-		switch {
-		case len(args) > 1:
-			return fmt.Errorf("can only provide no or 1 argument, not %d arguments", len(args))
-		case len(args) == 1:
-			if !url.IsVersion(args[0]) {
-				return fmt.Errorf("can only be one of the aviable keys: %s", url.ReturnVersions())
-			}
-			return nil
-		default:
-			return nil
-		}
-	},
+	Short: "List the default keys, optionally specifying one only returns one jwks url",
+	Args:  cobra.RangeArgs(0, 1),
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 1 {
 			jwksURL, _, err := url.ReturnJWKSAndPrivatePEMURL(args[0])
@@ -33,22 +21,21 @@ var listCmd = &cobra.Command{
 			}
 			fmt.Println(jwksURL)
 		} else {
+			w := newTabWriter()
+			fmt.Fprintf(w, "%s\t%s\t%s\n", "Key", "JWKS URL", "Private PEM URL")
 			const alphabet = "abc"
 			for _, c := range alphabet {
-				jwksURL, _, err := url.ReturnJWKSAndPrivatePEMURL(string(c))
+				jwks, pem, err := url.ReturnJWKSAndPrivatePEMURL(string(c))
 				if err != nil {
 					log.Fatal(err)
 				}
-				fmt.Printf("key %c, jwks url: "+jwksURL+"\n", c)
+				fmt.Fprintf(w, "%s\t%s\t%s\n", string(c), jwks, pem)
 			}
+			w.Flush()
 		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(listCmd)
-
-	// TODO ADD Showing pem url
-	//var showPemURL bool
-	//listCmd.Flags().BoolVarP(&showPemURL, "pem", "p", false, "Show URL For Private key")
 }
