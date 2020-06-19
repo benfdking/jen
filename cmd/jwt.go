@@ -4,7 +4,6 @@ import (
 	"crypto"
 	"fmt"
 	"io/ioutil"
-	"log"
 
 	"github.com/benfdking/jen/pkg/defaultjwt"
 	"github.com/benfdking/jen/pkg/rsapem"
@@ -23,22 +22,22 @@ var jwtCmd = &cobra.Command{
 	Use:   "jwt [claims json]",
 	Short: "Generate a jwt",
 	Args:  cobra.RangeArgs(0, 1),
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		var privateKey crypto.PrivateKey
 		if keyFilePath != "" {
 			keyBytes, err := ioutil.ReadFile(keyFilePath)
 			if err != nil {
-				log.Fatal(err)
+				return err
 			}
 			privateKey, err = rsapem.RSAPrivateFromPen(keyBytes)
 			if err != nil {
-				log.Fatal(err)
+				return err
 			}
 		} else {
 			var err error
 			_, privateKey, err = url.ReturnJWKSAndPrivateKey(key)
 			if err != nil {
-				log.Fatal(err)
+				return err
 			}
 		}
 
@@ -47,36 +46,37 @@ var jwtCmd = &cobra.Command{
 			var err error
 			token, err = defaultjwt.AddDefaultClaims(token)
 			if err != nil {
-				log.Fatal(err)
+				return err
 			}
 		}
 		if filePath != "" {
 			var err error
 			token, err = defaultjwt.AddJSONFileClaimsToToken(token, filePath)
 			if err != nil {
-				log.Fatal(err)
+				return err
 			}
 		}
 		if len(args) == 1 {
 			var err error
 			token, err = defaultjwt.AddJSONStringClaimsToToken(token, args[0])
 			if err != nil {
-				log.Fatal(err)
+				return err
 			}
 		}
 		if len(claims) > 0 {
 			var err error
 			token, err = defaultjwt.AddMapClaimsToToken(token, claims)
 			if err != nil {
-				log.Fatal(err)
+				return err
 			}
 		}
 
 		s, err := defaultjwt.SignToken(token, privateKey)
 		if err != nil {
-			log.Fatal(err)
+			return err
 		}
 		fmt.Println(s)
+		return nil
 	},
 }
 

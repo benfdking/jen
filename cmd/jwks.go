@@ -22,7 +22,7 @@ var jwksCmd = &cobra.Command{
 	Use:   "jwks",
 	Short: "Generate a jwk set with optional private and public key",
 	Args:  cobra.NoArgs,
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		privkey, err := rsa.GenerateKey(rand.Reader, 2048)
 		if err != nil {
 			log.Fatalf("failed to generate private key: %s", err)
@@ -51,6 +51,7 @@ var jwksCmd = &cobra.Command{
 		//		log.Fatalf("failed to write public key: %s", err)
 		//	}
 		//}
+		return nil
 	},
 }
 
