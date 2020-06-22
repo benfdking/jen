@@ -14,20 +14,6 @@ var rootCmd = &cobra.Command{
 	Short: "jen is your go to cmd tool for all things jwt",
 }
 
-var (
-	buildVersion = ""
-	buildCommit  = ""
-	buildDate    = ""
-)
-
-var versionCmd = &cobra.Command{
-	Use:   "version",
-	Short: "Return build information",
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("Version:\t%s\nCommit:\t\t%s\nTime:\t\t%s\n", buildVersion, buildCommit, buildDate)
-	},
-}
-
 func init() {
 	rootCmd.AddCommand(versionCmd)
 }
