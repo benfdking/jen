@@ -9,16 +9,20 @@ import (
 	"text/tabwriter"
 
 	"github.com/benfdking/jen/pkg/defaultjwt"
+	"github.com/benfdking/jen/pkg/oidc"
 	"github.com/benfdking/jen/pkg/rsapem"
 	"github.com/benfdking/jen/pkg/url"
 	"github.com/spf13/cobra"
 )
 
-var key string
-var keyFilePath string
-var addDefaults bool
-var filePath string
-var claims map[string]string
+var (
+	key                string
+	keyFilePath        string
+	addDefaults        bool
+	filePath           string
+	oidcStandardClaims bool
+	claims             map[string]string
+)
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -48,6 +52,13 @@ var rootCmd = &cobra.Command{
 		if addDefaults {
 			var err error
 			token, err = defaultjwt.AddDefaultClaims(token)
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+		if oidcStandardClaims {
+			var err error
+			token, err = defaultjwt.AddMapClaimsToToken(token, oidc.StandardClaims())
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -85,6 +96,7 @@ var rootCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(versionCmd)
 
+	rootCmd.Flags().BoolVarP(&oidcStandardClaims, "oidc", "o", false, "Flag to insert OIDC standard claims")
 	rootCmd.Flags().StringToStringVarP(&claims, "claims", "c", map[string]string{}, "Claims for JWT")
 	rootCmd.Flags().StringVarP(&key, "key", "k", "a", "[abc] jwt key to use")
 	rootCmd.Flags().BoolVarP(&addDefaults, "defaults", "d", true, "Add default claims")
