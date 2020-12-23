@@ -1,0 +1,3 @@
+.PHONY: keys_file
+keys_file:
+	go-bindata -o pkg/keys/data.go keys/...	

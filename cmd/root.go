@@ -96,7 +96,7 @@ var rootCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(versionCmd)
 
-	rootCmd.Flags().BoolVarP(&oidcStandardClaims, "oidc", "o", false, "Flag to insert OIDC standard claims")
+	rootCmd.Flags().BoolVarP(&oidcStandardClaims, "oidc", "o", false, "Add OIDC standard claims")
 	rootCmd.Flags().StringToStringVarP(&claims, "claims", "c", map[string]string{}, "Claims for JWT")
 	rootCmd.Flags().StringVarP(&key, "key", "k", "a", "[abc] jwt key to use")
 	rootCmd.Flags().BoolVarP(&addDefaults, "defaults", "d", true, "Add default claims")
