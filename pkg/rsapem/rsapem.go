@@ -4,6 +4,7 @@ import (
 	"crypto/rsa"
 	"crypto/x509"
 	"encoding/pem"
+	"fmt"
 )
 
 const rsaPrivateKey = "RSA PRIVATE KEY"
@@ -17,11 +18,11 @@ func RSAPrivateToPem(privateKey *rsa.PrivateKey) []byte {
 }
 
 // RSAPrivateFromPen decodes a private key from a PEM file
-func RSAPrivateFromPen(data []byte)(*rsa.PrivateKey, error) {
+func RSAPrivateFromPen(data []byte) (*rsa.PrivateKey, error) {
 	p, _ := pem.Decode(data)
 	key, err := x509.ParsePKCS1PrivateKey(p.Bytes)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("parsing private key: %w", err)
 	}
 	return key, nil
 }

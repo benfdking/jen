@@ -1,0 +1,12 @@
+version: "3.9"  
+services:
+  server:
+    image: kennethreitz/httpbin
+    ports:
+      - "8080:80"
+    links:
+      - envoy
+  envoy:
+    image: envoyproxy/envoy-alpine
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml
