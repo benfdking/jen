@@ -14,7 +14,7 @@ func ReturnVersions() []string {
 // IsVersion returns true if the passed string is one of the versions
 func IsVersion(s string) bool {
 	vs := ReturnVersions()
-	for _, v := range vs{
+	for _, v := range vs {
 		if v == s {
 			return true
 		}
