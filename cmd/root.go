@@ -41,7 +41,7 @@ var rootCmd = &cobra.Command{
 			}
 		} else {
 			var err error
-			_, privateKey, err = url.ReturnJWKSAndPrivateKey(key)
+			_, privateKey, err = url.ReturnJWKSAndPrivateKeyFromData(key)
 			if err != nil {
 				log.Fatal(err)
 			}
