@@ -17,7 +17,7 @@ func RSAPrivateToPem(privateKey *rsa.PrivateKey) []byte {
 }
 
 // RSAPrivateFromPen decodes a private key from a PEM file
-func RSAPrivateFromPen(data []byte)(*rsa.PrivateKey, error) {
+func RSAPrivateFromPen(data []byte) (*rsa.PrivateKey, error) {
 	p, _ := pem.Decode(data)
 	key, err := x509.ParsePKCS1PrivateKey(p.Bytes)
 	if err != nil {
