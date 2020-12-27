@@ -2,7 +2,6 @@ package server
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"strconv"
 
@@ -28,19 +27,21 @@ func handler(letter string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet:
-			jwks, _, err := url.ReturnJWKSAndPrivateKey(letter)
+			jwks, _, err := url.ReturnJWKSAndPrivateKeyFromData(letter)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
 			jsonbuf, err := json.MarshalIndent(jwks, "", "  ")
 			if err != nil {
-				log.Fatalf("failed to generate JSON: %s", err)
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
 			}
 			w.WriteHeader(http.StatusOK)
 			w.Write(jsonbuf)
 			return
 		default:
+			w.WriteHeader(http.StatusNotFound)
 			return
 		}
 	}
