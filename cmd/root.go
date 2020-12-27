@@ -9,7 +9,6 @@ import (
 	"text/tabwriter"
 
 	"github.com/benfdking/jen/pkg/defaultjwt"
-	"github.com/benfdking/jen/pkg/oidc"
 	"github.com/benfdking/jen/pkg/rsapem"
 	"github.com/benfdking/jen/pkg/url"
 	"github.com/spf13/cobra"
@@ -58,7 +57,7 @@ var rootCmd = &cobra.Command{
 		}
 		if oidcStandardClaims {
 			var err error
-			token, err = defaultjwt.AddMapClaimsToToken(token, oidc.StandardClaims())
+			token, err = defaultjwt.AddMapClaimsToToken(token, defaultjwt.OIDCStandardClaims())
 			if err != nil {
 				log.Fatal(err)
 			}

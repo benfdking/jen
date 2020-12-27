@@ -1,7 +1,7 @@
-package oidc
+package defaultjwt
 
-// StandardClaims returns a map of standard claims as defined by https://openid.net/specs/openid-connect-core-1_0.html.
-func StandardClaims() map[string]string {
+// OIDCStandardClaims returns a map of standard claims as defined by https://openid.net/specs/openid-connect-core-1_0.html.
+func OIDCStandardClaims() map[string]string {
 	return map[string]string{
 		"sub":                "90e5763f-7088-426f-941a-984dda3248c8",
 		"name":               "Dr. Michael Smith",
