@@ -2,16 +2,16 @@
 class Jen < Formula
   desc "Software to easily generate JWTs"
   homepage "https://github.com/benfdking/jen"
-  version "0.11.0"
+  version "0.12.0"
   bottle :unneeded
 
   if OS.mac?
-    url "http://github.com/benfdking/jen/releases/0.11.0/jen_0.11.0_Darwin_x86_64.tar.gz"
-    sha256 "9d45874b0f9b9c8c319585f468e874cfb75ad1257448eea86e2d107bf3fe2817"
+    url "http://github.com/benfdking/jen/releases/0.12.0/jen_0.12.0_Darwin_x86_64.tar.gz"
+    sha256 "cc09f11fa12aab5c52baf06ea3aea8f7c2213e7176f4a77ab3d5b1045c545af4"
   end
   if OS.linux? && Hardware::CPU.intel?
-    url "http://github.com/benfdking/jen/releases/0.11.0/jen_0.11.0_Linux_x86_64.tar.gz"
-    sha256 "f068d4abbc9adaacb5d27c88be673fc3bbcb83fb9cdf95e9529ccf0559a1b311"
+    url "http://github.com/benfdking/jen/releases/0.12.0/jen_0.12.0_Linux_x86_64.tar.gz"
+    sha256 "754eef0227efa0941d86e70e724dc09cad49c9156ac397a2338276de5a274c8d"
   end
 
   def install
